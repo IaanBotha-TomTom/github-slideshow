@@ -1,0 +1,58 @@
+{
+ "properties": {
+  "displayName": "Information-Classification Tag Value",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Enforces Information classification Tag",
+  "metadata": {
+   "category": "Tags",
+   "createdBy": "d4d0e1db-8ced-42cd-89ae-114f5c873e53",
+   "createdOn": "2022-07-29T13:03:12.8555958Z",
+   "updatedBy": "d4d0e1db-8ced-42cd-89ae-114f5c873e53",
+   "updatedOn": "2022-08-02T11:30:45.7118302Z"
+  },
+  "parameters": {
+   "tagName": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Tag Name",
+     "description": "Name of the tag, such as 'environment'"
+    },
+    "defaultValue": "information-classification"
+   },
+   "tagValues": {
+    "type": "Array",
+    "metadata": {
+     "displayName": "Tag Values",
+     "description": "Value of the tag, such as 'production'"
+    },
+    "allowedValues": [
+     "Public",
+     "Internal",
+     "Confidential",
+     "Strictly Confidential"
+    ]
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions"
+     },
+     {
+      "field": "[concat('tags[', parameters('tagName'), ']')]",
+      "notin": "[parameters('tagValues')]"
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/fd6dcf4e-bec7-4a90-b01e-a2e89587c5d4/providers/Microsoft.Authorization/policyDefinitions/1127c560-bd5f-44ef-8c6b-514366d34be5",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "1127c560-bd5f-44ef-8c6b-514366d34be5"
+}
